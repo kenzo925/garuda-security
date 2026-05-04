@@ -1,0 +1,42 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b0f1a;
+  color: #e6f1ff;
+}
+
+header {
+  background: #111a2e;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 2px solid #00ff99;
+}
+
+h1 {
+  color: #00ff99;
+  margin: 0;
+}
+
+nav a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+.card {
+  background: #111a2e;
+  padding: 15px;
+  margin: 10px 0;
+  border-left: 3px solid #00ff99;
+  border-radius: 8px;
+}
+
+a {
+  color: #00ff99;
+}
