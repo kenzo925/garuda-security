@@ -1,97 +1,1261 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Garuda Security</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garuda Security Official — Portal Berita Hacking & Cybersecurity</title>
+    <meta name="description" content="Garuda Security Official — Berita hacking terbaru, cyber attack, data breach, vulnerability, bug bounty dari Indonesia dan Global.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { inter: ['Inter','sans-serif'], mono: ['JetBrains Mono','monospace'] },
+                    colors: {
+                        g: {
+                            red: '#DC2626', darkred: '#991B1B', black: '#050505', dark: '#0A0A0A',
+                            panel: '#0F0F0F', card: '#141414', cardhover: '#1A1A1A',
+                            border: '#1C1C1C', borderL: '#2A2A2A', text: '#E5E5E5',
+                            muted: '#6B6B6B', green: '#22C55E', cyan: '#06B6D4',
+                            gold: '#EAB308', purple: '#A855F7',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        *{font-family:'Inter',sans-serif;margin:0;padding:0;box-sizing:border-box}
+        .font-mono{font-family:'JetBrains Mono',monospace!important}
+        html{scroll-behavior:smooth}
+        ::selection{background:#DC2626;color:#fff}
+        body{background:#050505;color:#E5E5E5;overflow-x:hidden}
+        ::-webkit-scrollbar{width:5px}
+        ::-webkit-scrollbar-track{background:#0A0A0A}
+        ::-webkit-scrollbar-thumb{background:#DC2626;border-radius:3px}
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0a0f1c;
-      color: #00ff99;
-      text-align: center;
-    }
+        #matrixCanvas{position:fixed;inset:0;z-index:0;opacity:.03;pointer-events:none}
 
-    .container {
-      padding: 60px 20px;
-    }
+        .glow-border{box-shadow:0 0 0 1px rgba(220,38,38,.15),0 0 25px -8px rgba(220,38,38,.12)}
+        .glow-border:hover{box-shadow:0 0 0 1px rgba(220,38,38,.4),0 0 35px -5px rgba(220,38,38,.2)}
 
-    h1 {
-      font-size: 40px;
-      margin-bottom: 10px;
-    }
+        .grad-text{background:linear-gradient(135deg,#DC2626,#F87171,#FCA5A5,#DC2626);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gShift 4s ease infinite}
+        @keyframes gShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 
-    .tagline {
-      color: #ffffff;
-      font-size: 16px;
-      opacity: 0.8;
-      margin-bottom: 30px;
-    }
+        .pulse-dot{animation:pDot 2s ease-in-out infinite}
+        @keyframes pDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.6)}}
 
-    .card {
-      background: #111a2e;
-      padding: 20px;
-      margin: 15px auto;
-      max-width: 500px;
-      border-radius: 12px;
-      border: 1px solid #00ff99;
-    }
+        .ticker-scroll{animation:ticker 35s linear infinite}
+        @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-    a {
-      color: #00ff99;
-      text-decoration: none;
-      font-weight: bold;
-    }
+        .news-card{transition:all .3s ease}
+        .news-card:hover{transform:translateY(-3px);background:#1A1A1A}
+        .news-card:hover .card-img{transform:scale(1.06)}
+        .card-img{transition:transform .5s ease}
 
-    .btn {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 15px;
-      border: 1px solid #00ff99;
-      border-radius: 8px;
-    }
+        .tab-active{background:#DC2626!important;color:#fff!important;border-color:#DC2626!important}
 
-    footer {
-      margin-top: 40px;
-      font-size: 12px;
-      opacity: 0.6;
-    }
-  </style>
+        .scanline{position:relative;overflow:hidden}
+        .scanline::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#DC2626,transparent);animation:scanY 4s linear infinite;z-index:2}
+        @keyframes scanY{0%{top:-2px;opacity:0}5%{opacity:1}95%{opacity:1}100%{top:100%;opacity:0}}
+
+        .typing::after{content:'█';color:#DC2626;animation:blink 1s step-end infinite}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+        .fade-up{opacity:0;transform:translateY(30px);transition:all .6s ease}
+        .fade-up.visible{opacity:1;transform:translateY(0)}
+
+        .mobile-menu{transform:translateX(100%);transition:transform .3s ease}
+        .mobile-menu.open{transform:translateX(0)}
+
+        .toast-msg{animation:toastIn .3s ease,toastOut .3s ease 2.7s forwards}
+        @keyframes toastIn{from{transform:translateY(80px);opacity:0}to{transform:translateY(0);opacity:1}}
+        @keyframes toastOut{from{opacity:1}to{opacity:0;transform:translateY(20px)}}
+
+        .threat-pulse{animation:tPulse 2s ease-in-out infinite}
+        @keyframes tPulse{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.4)}50%{box-shadow:0 0 0 12px rgba(220,38,38,0)}}
+
+        .stat-num{font-variant-numeric:tabular-nums}
+
+        @media(max-width:640px){
+            .hero-title{font-size:2rem!important}
+        }
+    </style>
 </head>
-
 <body>
 
-  <div class="container">
+<canvas id="matrixCanvas"></canvas>
 
-    <h1>🛡️ Garuda Security</h1>
-    <p class="tagline">
-      Cybersecurity News • CVE Tracking • Threat Intelligence
-    </p>
+<!-- ========== BREAKING NEWS TICKER ========== -->
+<div class="relative z-50 bg-g-red text-white text-xs font-semibold overflow-hidden">
+    <div class="flex items-center">
+        <div class="bg-g-darkred px-4 py-2 flex items-center gap-2 shrink-0 z-10 border-r border-g-red/50">
+            <span class="w-2 h-2 bg-white rounded-full pulse-dot"></span>
+            <span class="tracking-wider">BREAKING</span>
+        </div>
+        <div class="overflow-hidden flex-1">
+            <div class="ticker-scroll flex whitespace-nowrap py-2">
+                <span class="mx-8">🚨 Data 2.3 Juta Pengguna E-Commerce Indonesia Dijual di Dark Web</span>
+                <span class="mx-8">🔴 Ransomware LockBit 4.0 Targetkan Bank Digital Asia Tenggara</span>
+                <span class="mx-8">⚠️ CVE-2025-3028: Kerentanan Kritis Router Mikrotik Dieksploitasi Aktif</span>
+                <span class="mx-8">🇮🇩 Kominfo Deteksi 14.000 Serangan Siber/Hari ke Infrastruktur Kritis</span>
+                <span class="mx-8">🌍 Hacker Pro-Russia Serang Grid Listrik Ukraina — Malware Sandworm</span>
+                <span class="mx-8">🔓 0-Day Chrome Dieksploitasi di Wild — Google Release Patch Darurat</span>
+                <span class="mx-8">🚨 Data 2.3 Juta Pengguna E-Commerce Indonesia Dijual di Dark Web</span>
+                <span class="mx-8">🔴 Ransomware LockBit 4.0 Targetkan Bank Digital Asia Tenggara</span>
+                <span class="mx-8">⚠️ CVE-2025-3028: Kerentanan Kritis Router Mikrotik Dieksploitasi Aktif</span>
+                <span class="mx-8">🇮🇩 Kominfo Deteksi 14.000 Serangan Siber/Hari ke Infrastruktur Kritis</span>
+                <span class="mx-8">🌍 Hacker Pro-Russia Serang Grid Listrik Ukraina — Malware Sandworm</span>
+                <span class="mx-8">🔓 0-Day Chrome Dieksploitasi di Wild — Google Release Patch Darurat</span>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <div class="card">
-      <h3>📌 Latest Update</h3>
-      <p>CVE reports & vulnerability tracking updates in real time.</p>
+<!-- ========== NAVBAR ========== -->
+<nav id="navbar" class="sticky top-0 z-40 bg-g-black/80 backdrop-blur-xl border-b border-g-border transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex items-center justify-between h-16">
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-g-red rounded-lg flex items-center justify-center group-hover:shadow-lg group-hover:shadow-red-500/30 transition-all duration-300">
+                    <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" fill="currentColor"><path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5zm0 2.18l7 3.89v5.93c0 4.56-3.14 8.83-7 9.93-3.86-1.1-7-5.37-7-9.93V8.07l7-3.89z"/><path d="M10 15.5l-3.5-3.5 1.41-1.41L10 12.67l5.59-5.59L17 8.5l-7 7z"/></svg>
+                </div>
+                <div class="hidden sm:block">
+                    <div class="text-white font-bold text-sm leading-tight">GARUDA SECURITY</div>
+                    <div class="text-g-red text-[10px] font-mono font-semibold tracking-[.2em]">OFFICIAL</div>
+                </div>
+            </a>
+
+            <div class="hidden lg:flex items-center gap-1">
+                <a href="#hero" class="px-3 py-2 text-sm text-g-muted hover:text-white hover:bg-white/5 rounded-lg transition-all">Beranda</a>
+                <a href="#terbaru" class="px-3 py-2 text-sm text-g-muted hover:text-white hover:bg-white/5 rounded-lg transition-all">Terbaru</a>
+                <a href="#indo" class="px-3 py-2 text-sm text-g-muted hover:text-white hover:bg-white/5 rounded-lg transition-all">🇮🇩 Indo</a>
+                <a href="#global" class="px-3 py-2 text-sm text-g-muted hover:text-white hover:bg-white/5 rounded-lg transition-all">🌍 Global</a>
+                <a href="#tutorial" class="px-3 py-2 text-sm text-g-muted hover:text-white hover:bg-white/5 rounded-lg transition-all">Tutorial</a>
+                <a href="#tools" class="px-3 py-2 text-sm text-g-muted hover:text-white hover:bg-white/5 rounded-lg transition-all">Tools</a>
+                <a href="#threatmap" class="px-3 py-2 text-sm text-g-muted hover:text-white hover:bg-white/5 rounded-lg transition-all">Threat Map</a>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button onclick="toggleSearch()" class="p-2 text-g-muted hover:text-white hover:bg-white/5 rounded-lg transition-all"><i data-lucide="search" class="w-5 h-5"></i></button>
+                <a href="https://www.instagram.com/garuda.security.official/" target="_blank" class="hidden sm:flex items-center gap-2 bg-g-red hover:bg-g-darkred text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-red-500/25">
+                    <i data-lucide="instagram" class="w-4 h-4"></i>Follow IG
+                </a>
+                <button onclick="toggleMobile()" class="lg:hidden p-2 text-g-muted hover:text-white"><i data-lucide="menu" class="w-6 h-6"></i></button>
+            </div>
+        </div>
+    </div>
+    <div id="searchBar" class="hidden border-t border-g-border bg-g-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3">
+            <div class="flex items-center gap-3 bg-g-card border border-g-border rounded-lg px-4 py-2.5">
+                <i data-lucide="search" class="w-5 h-5 text-g-muted shrink-0"></i>
+                <input id="searchInput" type="text" placeholder="Cari berita hacking, vulnerability, data breach..." class="bg-transparent flex-1 text-sm text-white placeholder-g-muted outline-none">
+                <kbd class="hidden sm:block text-[10px] text-g-muted bg-g-border px-2 py-0.5 rounded font-mono">ESC</kbd>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobileMenu" class="mobile-menu fixed inset-0 z-50 bg-g-black/98 backdrop-blur-xl lg:hidden">
+    <div class="flex items-center justify-between p-4 border-b border-g-border">
+        <span class="text-white font-bold">Menu</span>
+        <button onclick="toggleMobile()" class="p-2 text-g-muted hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
+    </div>
+    <div class="p-6 space-y-1">
+        <a href="#hero" onclick="toggleMobile()" class="block px-4 py-3 text-g-text hover:text-white hover:bg-white/5 rounded-lg transition-all">🏠 Beranda</a>
+        <a href="#terbaru" onclick="toggleMobile()" class="block px-4 py-3 text-g-text hover:text-white hover:bg-white/5 rounded-lg transition-all">⚡ Berita Terbaru</a>
+        <a href="#indo" onclick="toggleMobile()" class="block px-4 py-3 text-g-text hover:text-white hover:bg-white/5 rounded-lg transition-all">🇮🇩 Hacking Indonesia</a>
+        <a href="#global" onclick="toggleMobile()" class="block px-4 py-3 text-g-text hover:text-white hover:bg-white/5 rounded-lg transition-all">🌍 Hacking Global</a>
+        <a href="#tutorial" onclick="toggleMobile()" class="block px-4 py-3 text-g-text hover:text-white hover:bg-white/5 rounded-lg transition-all">📘 Tutorial</a>
+        <a href="#tools" onclick="toggleMobile()" class="block px-4 py-3 text-g-text hover:text-white hover:bg-white/5 rounded-lg transition-all">🔧 Tools</a>
+        <a href="#threatmap" onclick="toggleMobile()" class="block px-4 py-3 text-g-text hover:text-white hover:bg-white/5 rounded-lg transition-all">🗺️ Threat Map</a>
+        <div class="pt-4 mt-4 border-t border-g-border">
+            <a href="https://www.instagram.com/garuda.security.official/" target="_blank" class="flex items-center justify-center gap-2 bg-g-red text-white px-4 py-3 rounded-lg font-semibold w-full">
+                <i data-lucide="instagram" class="w-5 h-5"></i> Follow @garuda.security.official
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- ========== HERO ========== -->
+<section id="hero" class="relative z-10 min-h-[85vh] flex items-center overflow-hidden">
+    <div class="absolute inset-0 z-0">
+        <img src="https://picsum.photos/seed/cyberhack2025/1920/1080.jpg" alt="" class="w-full h-full object-cover opacity-[.07]">
+        <div class="absolute inset-0 bg-gradient-to-r from-g-black via-g-black/90 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-g-black via-transparent to-g-black/50"></div>
     </div>
 
-    <div class="card">
-      <h3>📡 Focus</h3>
-      <p>Security awareness • Exploit research • Cyber defense education</p>
+    <!-- Decorative lines -->
+    <div class="absolute top-0 left-1/2 w-px h-full bg-gradient-to-b from-transparent via-g-red/20 to-transparent z-0"></div>
+    <div class="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-g-red/10 to-transparent z-0"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-20 w-full">
+        <div class="max-w-3xl">
+            <!-- Live badge -->
+            <div class="inline-flex items-center gap-2 bg-g-card border border-g-border rounded-full px-4 py-1.5 mb-6">
+                <span class="w-2 h-2 bg-g-green rounded-full pulse-dot"></span>
+                <span class="text-xs text-g-muted font-mono">LIVE UPDATES — JUN 2025</span>
+            </div>
+
+            <h1 class="hero-title text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight mb-6">
+                Portal Berita<br>
+                <span class="grad-text">Hacking &</span><br>
+                Cybersecurity
+            </h1>
+
+            <p class="text-lg sm:text-xl text-g-muted font-light leading-relaxed max-w-xl mb-8">
+                Update berita hacking, data breach, vulnerability, dan cyber attack terbaru dari <span class="text-white font-medium">Indonesia</span> dan <span class="text-white font-medium">Global</span>. Untuk hacker, security researcher, dan pecinta cyber.
+            </p>
+
+            <div class="flex flex-wrap gap-3 mb-12">
+                <a href="#terbaru" class="inline-flex items-center gap-2 bg-g-red hover:bg-g-darkred text-white px-6 py-3 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-red-500/25 text-sm">
+                    <i data-lucide="zap" class="w-4 h-4"></i> Baca Berita Terbaru
+                </a>
+                <a href="https://www.instagram.com/garuda.security.official/" target="_blank" class="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-g-border hover:border-g-borderL text-white px-6 py-3 rounded-lg font-semibold transition-all text-sm">
+                    <i data-lucide="instagram" class="w-4 h-4"></i> Follow di Instagram
+                </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-3 gap-4 max-w-md">
+                <div class="text-center sm:text-left">
+                    <div class="text-2xl sm:text-3xl font-black text-white stat-num">2.4K+</div>
+                    <div class="text-xs text-g-muted mt-1">Berita Dipublikasi</div>
+                </div>
+                <div class="text-center sm:text-left">
+                    <div class="text-2xl sm:text-3xl font-black text-white stat-num">150K+</div>
+                    <div class="text-xs text-g-muted mt-1">Instagram Reach</div>
+                </div>
+                <div class="text-center sm:text-left">
+                    <div class="text-2xl sm:text-3xl font-black text-white stat-num">24/7</div>
+                    <div class="text-xs text-g-muted mt-1">Monitoring</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terminal preview -->
+        <div class="hidden xl:block absolute right-0 top-1/2 -translate-y-1/2 w-[420px]">
+            <div class="bg-g-card border border-g-border rounded-xl overflow-hidden glow-border scanline">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-g-border bg-g-panel">
+                    <div class="w-3 h-3 rounded-full bg-g-red/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-g-gold/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-g-green/80"></div>
+                    <span class="text-[11px] text-g-muted font-mono ml-2">garuda-security@terminal</span>
+                </div>
+                <div class="p-4 font-mono text-xs leading-6 text-g-muted space-y-1">
+                    <div><span class="text-g-green">┌──(</span><span class="text-g-red">garuda</span><span class="text-g-green">㉿</span><span class="text-white">security</span><span class="text-g-green">)-[~]</span></div>
+                    <div><span class="text-g-green">└─$</span> <span class="text-white">cat /var/log/breaches.log | tail -5</span></div>
+                    <div class="text-g-red">[CRITICAL] E-Commerce ID — 2.3M records leaked</div>
+                    <div class="text-g-gold">[HIGH] Mikrotik 0-Day — Active exploitation</div>
+                    <div class="text-g-cyan">[MEDIUM] Phishing kit targeting BRI customers</div>
+                    <div class="text-g-gold">[HIGH] LockBit 4.0 — SE Asia banking sector</div>
+                    <div class="text-g-red">[CRITICAL] Chrome 0-Day — In-the-wild exploit</div>
+                    <div class="mt-2"><span class="text-g-green">┌──(</span><span class="text-g-red">garuda</span><span class="text-g-green">㉿</span><span class="text-white">security</span><span class="text-g-green">)-[~]</span></div>
+                    <div><span class="text-g-green">└─$</span> <span class="text-white typing">monitoring --mode live --region</span></div>
+                </div>
+            </div>
+        </div>
     </div>
+</section>
 
-    <div class="card">
-      <h3>🔗 Connect</h3>
-      <a class="btn" href="https://instagram.com/garuda.security.official" target="_blank">
-        Instagram
-      </a>
+<!-- ========== LATEST NEWS ========== -->
+<section id="terbaru" class="relative z-10 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex items-center justify-between mb-10 fade-up">
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-1 h-6 bg-g-red rounded-full"></div>
+                    <span class="text-xs font-mono text-g-red tracking-wider uppercase">Latest News</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Berita Terbaru</h2>
+            </div>
+            <a href="#" class="hidden sm:flex items-center gap-1 text-sm text-g-muted hover:text-g-red transition-colors">
+                Lihat semua <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+        </div>
+
+        <!-- Featured + Grid -->
+        <div class="grid lg:grid-cols-5 gap-5 fade-up">
+            <!-- Featured -->
+            <div class="lg:col-span-3 group">
+                <div class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border h-full">
+                    <div class="relative overflow-hidden aspect-[16/9]">
+                        <img src="https://picsum.photos/seed/darkweb2025/800/450.jpg" alt="" class="card-img w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-g-card via-transparent to-transparent"></div>
+                        <div class="absolute top-4 left-4 flex gap-2">
+                            <span class="bg-g-red text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Critical</span>
+                            <span class="bg-black/60 backdrop-blur text-white text-[10px] font-bold px-2.5 py-1 rounded-md">🇮🇩 Indonesia</span>
+                        </div>
+                    </div>
+                    <div class="p-5 sm:p-6">
+                        <div class="flex items-center gap-3 text-xs text-g-muted mb-3">
+                            <span class="font-mono">25 Jun 2025</span>
+                            <span>•</span>
+                            <span>5 min read</span>
+                            <span>•</span>
+                            <span class="text-g-red font-semibold">DATA BREACH</span>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold text-white leading-tight mb-3 group-hover:text-g-red transition-colors">
+                            Data 2.3 Juta Pengguna E-Commerce Indonesia Dijual di Dark Web — Ini Detailnya
+                        </h3>
+                        <p class="text-sm text-g-muted leading-relaxed line-clamp-3">
+                            Sebuah database berisi 2.3 juta record pengguna e-commerce lokal ditemukan dijual di forum dark web BreachForums. Data mencakup email, hashed password, nomor telepon, dan alamat. Diduga berasal dari serangan SQL Injection pada Maret 2025...
+                        </p>
+                        <div class="flex items-center gap-4 mt-5 pt-4 border-t border-g-border">
+                            <div class="flex items-center gap-2 text-xs text-g-muted"><i data-lucide="eye" class="w-3.5 h-3.5"></i> 24.5K views</div>
+                            <div class="flex items-center gap-2 text-xs text-g-muted"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i> 312 comments</div>
+                            <div class="flex items-center gap-2 text-xs text-g-muted"><i data-lucide="share-2" class="w-3.5 h-3.5"></i> Share</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Side list -->
+            <div class="lg:col-span-2 flex flex-col gap-4">
+                <div class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border flex-1">
+                    <div class="flex h-full">
+                        <div class="relative w-32 sm:w-40 shrink-0 overflow-hidden">
+                            <img src="https://picsum.photos/seed/ransomware25/300/300.jpg" alt="" class="card-img w-full h-full object-cover">
+                            <div class="absolute top-2 left-2">
+                                <span class="bg-g-gold text-black text-[9px] font-bold px-2 py-0.5 rounded uppercase">High</span>
+                            </div>
+                        </div>
+                        <div class="p-4 flex flex-col justify-center">
+                            <span class="text-[10px] font-mono text-g-gold tracking-wider mb-1">RANSOMWARE</span>
+                            <h4 class="text-sm font-bold text-white leading-snug mb-2 line-clamp-2">LockBit 4.0 Resmi Dirilis — Target Utama Bank Digital Asia Tenggara</h4>
+                            <span class="text-[11px] text-g-muted font-mono">24 Jun 2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border flex-1">
+                    <div class="flex h-full">
+                        <div class="relative w-32 sm:w-40 shrink-0 overflow-hidden">
+                            <img src="https://picsum.photos/seed/mikrotikvuln/300/300.jpg" alt="" class="card-img w-full h-full object-cover">
+                            <div class="absolute top-2 left-2">
+                                <span class="bg-g-red text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase">Critical</span>
+                            </div>
+                        </div>
+                        <div class="p-4 flex flex-col justify-center">
+                            <span class="text-[10px] font-mono text-g-cyan tracking-wider mb-1">VULNERABILITY</span>
+                            <h4 class="text-sm font-bold text-white leading-snug mb-2 line-clamp-2">CVE-2025-3028: 0-Day Mikrotik Dieksploitasi Massal di Indonesia</h4>
+                            <span class="text-[11px] text-g-muted font-mono">23 Jun 2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border flex-1">
+                    <div class="flex h-full">
+                        <div class="relative w-32 sm:w-40 shrink-0 overflow-hidden">
+                            <img src="https://picsum.photos/seed/chrome0day/300/300.jpg" alt="" class="card-img w-full h-full object-cover">
+                            <div class="absolute top-2 left-2">
+                                <span class="bg-g-red text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase">0-Day</span>
+                            </div>
+                        </div>
+                        <div class="p-4 flex flex-col justify-center">
+                            <span class="text-[10px] font-mono text-g-purple tracking-wider mb-1">EXPLOIT</span>
+                            <h4 class="text-sm font-bold text-white leading-snug mb-2 line-clamp-2">Google Patch Darurat: Chrome 0-Day Dieksploitasi di Wild</h4>
+                            <span class="text-[11px] text-g-muted font-mono">22 Jun 2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border flex-1">
+                    <div class="flex h-full">
+                        <div class="relative w-32 sm:w-40 shrink-0 overflow-hidden">
+                            <img src="https://picsum.photos/seed/phishingkit/300/300.jpg" alt="" class="card-img w-full h-full object-cover">
+                            <div class="absolute top-2 left-2">
+                                <span class="bg-g-gold text-black text-[9px] font-bold px-2 py-0.5 rounded uppercase">Alert</span>
+                            </div>
+                        </div>
+                        <div class="p-4 flex flex-col justify-center">
+                            <span class="text-[10px] font-mono text-g-green tracking-wider mb-1">PHISHING</span>
+                            <h4 class="text-sm font-bold text-white leading-snug mb-2 line-clamp-2">Phishing Kit Baru Targetkan Nasabah BRI & BCA — Tampilan 100% Mirip</h4>
+                            <span class="text-[11px] text-g-muted font-mono">21 Jun 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</section>
 
-    <footer>
-      © 2026 Garuda Security | All rights reserved
-    </footer>
+<!-- ========== HACKING INDONESIA ========== -->
+<section id="indo" class="relative z-10 py-20 border-t border-g-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex items-center gap-3 mb-10 fade-up">
+            <span class="text-3xl">🇮🇩</span>
+            <div>
+                <span class="text-xs font-mono text-g-red tracking-wider uppercase">Hacking Indonesia</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Berita Cyber Indo</h2>
+            </div>
+        </div>
 
-  </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 fade-up">
+            <!-- Card 1 -->
+            <article class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border">
+                <div class="relative overflow-hidden aspect-video">
+                    <img src="https://picsum.photos/seed/satudata25/600/340.jpg" alt="" class="card-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-g-card via-transparent to-transparent"></div>
+                    <span class="absolute top-3 left-3 bg-g-red/90 backdrop-blur text-white text-[10px] font-bold px-2 py-0.5 rounded">DATA LEAK</span>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center gap-2 text-[11px] text-g-muted font-mono mb-2">
+                        <span>25 Jun 2025</span><span>•</span><span>3 min</span>
+                    </div>
+                    <h3 class="text-base font-bold text-white leading-snug mb-2">Satu Data Indonesia: 800 Ribu Data Pendidikan Bocor di Forum Rusia</h3>
+                    <p class="text-xs text-g-muted leading-relaxed line-clamp-2">Database Dapodik yang berisi data siswa dan guru ditemukan gratis di forum hacker berbahasa Rusia. Data mencakup NIK, nama, dan sekolah...</p>
+                    <div class="flex items-center gap-3 mt-4 text-[11px] text-g-muted">
+                        <span class="flex items-center gap-1"><i data-lucide="eye" class="w-3 h-3"></i>18.2K</span>
+                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-3 h-3"></i>247</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border">
+                <div class="relative overflow-hidden aspect-video">
+                    <img src="https://picsum.photos/seed/bankhack25/600/340.jpg" alt="" class="card-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-g-card via-transparent to-transparent"></div>
+                    <span class="absolute top-3 left-3 bg-g-gold/90 backdrop-blur text-black text-[10px] font-bold px-2 py-0.5 rounded">FINANCIAL</span>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center gap-2 text-[11px] text-g-muted font-mono mb-2">
+                        <span>24 Jun 2025</span><span>•</span><span>4 min</span>
+                    </div>
+                    <h3 class="text-base font-bold text-white leading-snug mb-2">Modus Baru Skimming ATM di Jakarta — Menggunakan Device Bluetooth Mini</h3>
+                    <p class="text-xs text-g-muted leading-relaxed line-clamp-2">Polda Metro Jaya mengungkap sindikat skimming yang menggunakan perangkat Bluetooth mini yang nyaris tak terlihat di slot kartu ATM...</p>
+                    <div class="flex items-center gap-3 mt-4 text-[11px] text-g-muted">
+                        <span class="flex items-center gap-1"><i data-lucide="eye" class="w-3 h-3"></i>31.4K</span>
+                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-3 h-3"></i>523</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border">
+                <div class="relative overflow-hidden aspect-video">
+                    <img src="https://picsum.photos/seed/oto25indo/600/340.jpg" alt="" class="card-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-g-card via-transparent to-transparent"></div>
+                    <span class="absolute top-3 left-3 bg-g-cyan/90 backdrop-blur text-black text-[10px] font-bold px-2 py-0.5 rounded">DEFACE</span>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center gap-2 text-[11px] text-g-muted font-mono mb-2">
+                        <span>23 Jun 2025</span><span>•</span><span>2 min</span>
+                    </div>
+                    <h3 class="text-base font-bold text-white leading-snug mb-2">30+ Website Pemerintah Daerah Deface dalam Satu Malam — "Garuda Tidak Butuh Script Kiddie"</h3>
+                    <p class="text-xs text-g-muted leading-relaxed line-clamp-2">Lebih dari 30 subdomain pemerintah daerah berhasil di-deface dengan pesan politik. Dugaan sementara menunjuk ke kerentanan CMS lama...</p>
+                    <div class="flex items-center gap-3 mt-4 text-[11px] text-g-muted">
+                        <span class="flex items-center gap-1"><i data-lucide="eye" class="w-3 h-3"></i>42.1K</span>
+                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-3 h-3"></i>891</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 4 -->
+            <article class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border">
+                <div class="relative overflow-hidden aspect-video">
+                    <img src="https://picsum.photos/seed/dds25id/600/340.jpg" alt="" class="card-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-g-card via-transparent to-transparent"></div>
+                    <span class="absolute top-3 left-3 bg-g-green/90 backdrop-blur text-black text-[10px] font-bold px-2 py-0.5 rounded">BUG BOUNTY</span>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center gap-2 text-[11px] text-g-muted font-mono mb-2">
+                        <span>22 Jun 2025</span><span>•</span><span>5 min</span>
+                    </div>
+                    <h3 class="text-base font-bold text-white leading-snug mb-2">Hacker Indonesia Raih $15.000 dari Bug Bounty — Temukan RCE di Platform Fintech Lokal</h3>
+                    <p class="text-xs text-g-muted leading-relaxed line-clamp-2">Seorang bug hunter asal Bandung berhasil menemukan Remote Code Execution di salah satu fintech unicorn Indonesia melalui program bug bounty...</p>
+                    <div class="flex items-center gap-3 mt-4 text-[11px] text-g-muted">
+                        <span class="flex items-center gap-1"><i data-lucide="eye" class="w-3 h-3"></i>27.8K</span>
+                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-3 h-3"></i>412</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 5 -->
+            <article class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border">
+                <div class="relative overflow-hidden aspect-video">
+                    <img src="https://picsum.photos/seed/uuite25/600/340.jpg" alt="" class="card-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-g-card via-transparent to-transparent"></div>
+                    <span class="absolute top-3 left-3 bg-g-purple/90 backdrop-blur text-white text-[10px] font-bold px-2 py-0.5 rounded">REGULASI</span>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center gap-2 text-[11px] text-g-muted font-mono mb-2">
+                        <span>21 Jun 2025</span><span>•</span><span>3 min</span>
+                    </div>
+                    <h3 class="text-base font-bold text-white leading-snug mb-2">UU PDP Efektif Penuh — Ancaman Pidana 5 Tahun untuk Pelaku Data Breach</h3>
+                    <p class="text-xs text-g-muted leading-relaxed line-clamp-2">Pemerintah resmi memberlakukan sanksi pidana UU Perlindungan Data Pribadi. Perusahaan yang lalai mengamankan data pengguna bisa dipidana...</p>
+                    <div class="flex items-center gap-3 mt-4 text-[11px] text-g-muted">
+                        <span class="flex items-center gap-1"><i data-lucide="eye" class="w-3 h-3"></i>15.3K</span>
+                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-3 h-3"></i>198</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Card 6 -->
+            <article class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border">
+                <div class="relative overflow-hidden aspect-video">
+                    <img src="https://picsum.photos/seed/socialeng25/600/340.jpg" alt="" class="card-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-g-card via-transparent to-transparent"></div>
+                    <span class="absolute top-3 left-3 bg-g-gold/90 backdrop-blur text-black text-[10px] font-bold px-2 py-0.5 rounded">SOCIAL ENG.</span>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center gap-2 text-[11px] text-g-muted font-mono mb-2">
+                        <span>20 Jun 2025</span><span>•</span><span>4 min</span>
+                    </div>
+                    <h3 class="text-base font-bold text-white leading-snug mb-2">AI Deepfake Dipakai Penipu Palsukan Wajah Dirut BUMN — Korban Rugi Rp 2M</h3>
+                    <p class="text-xs text-g-muted leading-relaxed line-clamp-2">Kasus deepfake pertama di Indonesia yang melibatkan video call AI. Penipu berhasil menipu karyawan keuangan BUMN menggunakan wajah palsu dirut...</p>
+                    <div class="flex items-center gap-3 mt-4 text-[11px] text-g-muted">
+                        <span class="flex items-center gap-1"><i data-lucide="eye" class="w-3 h-3"></i>55.7K</span>
+                        <span class="flex items-center gap-1"><i data-lucide="message-circle" class="w-3 h-3"></i>1.2K</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- ========== HACKING GLOBAL ========== -->
+<section id="global" class="relative z-10 py-20 border-t border-g-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex items-center gap-3 mb-10 fade-up">
+            <span class="text-3xl">🌍</span>
+            <div>
+                <span class="text-xs font-mono text-g-cyan tracking-wider uppercase">Hacking Global</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Berita Cyber Dunia</h2>
+            </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 fade-up">
+            <article class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border">
+                <div class="relative overflow-hidden aspect-video">
+                    <img src="https://picsum.photos/seed/ukraine25/600/340.jpg" alt="" class="card-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-g-card via-transparent to-transparent"></div>
+                    <span class="absolute top-3 left-3 bg-g-red/90 text-white text-[9px] font-bold px-2 py-0.5 rounded">🇺🇦 CYBERWAR</span>
+                </div>
+                <div class="p-4">
+                    <span class="text-[10px] font-mono text-g-muted">25 Jun 2025</span>
+                    <h3 class="text-sm font-bold text-white leading-snug mt-1.5 mb-2">Sandworm 2.0: Malware Baru Rusia Hancurkan Grid Listrik 3 Kota di Ukraina</h3>
+                    <div class="flex items-center gap-2 text-[11px] text-g-muted">
+                        <span class="flex items-center gap-1"><i data-lucide="eye" class="w-3 h-3"></i>38K</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border">
+                <div class="relative overflow-hidden aspect-video">
+                    <img src="https://picsum.photos/seed/nvidia25/600/340.jpg" alt="" class="card-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-g-card via-transparent to-transparent"></div>
+                    <span class="absolute top-3 left-3 bg-g-gold/90 text-black text-[9px] font-bold px-2 py-0.5 rounded">🇺🇸 TECH</span>
+                </div>
+                <div class="p-4">
+                    <span class="text-[10px] font-mono text-g-muted">24 Jun 2025</span>
+                    <h3 class="text-sm font-bold text-white leading-snug mt-1.5 mb-2">NVIDIA Bocor: Source Code Driver GPU Internal 1.2TB Muncul di Torrent</h3>
+                    <div class="flex items-center gap-2 text-[11px] text-g-muted">
+                        <span class="flex items-center gap-1"><i data-lucide="eye" class="w-3 h-3"></i>67K</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border">
+                <div class="relative overflow-hidden aspect-video">
+                    <img src="https://picsum.photos/seed/chinaapt25/600/340.jpg" alt="" class="card-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-g-card via-transparent to-transparent"></div>
+                    <span class="absolute top-3 left-3 bg-g-purple/90 text-white text-[9px] font-bold px-2 py-0.5 rounded">🇨🇳 APT</span>
+                </div>
+                <div class="p-4">
+                    <span class="text-[10px] font-mono text-g-muted">23 Jun 2025</span>
+                    <h3 class="text-sm font-bold text-white leading-snug mt-1.5 mb-2">APT41 Kembali: Kampanye Baru Targetkan Telekomunikasi 5 Negara ASEAN</h3>
+                    <div class="flex items-center gap-2 text-[11px] text-g-muted">
+                        <span class="flex items-center gap-1"><i data-lucide="eye" class="w-3 h-3"></i>29K</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border">
+                <div class="relative overflow-hidden aspect-video">
+                    <img src="https://picsum.photos/seed/apple25bug/600/340.jpg" alt="" class="card-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-g-card via-transparent to-transparent"></div>
+                    <span class="absolute top-3 left-3 bg-g-green/90 text-black text-[9px] font-bold px-2 py-0.5 rounded">🍎 APPLE</span>
+                </div>
+                <div class="p-4">
+                    <span class="text-[10px] font-mono text-g-muted">22 Jun 2025</span>
+                    <h3 class="text-sm font-bold text-white leading-snug mt-1.5 mb-2">iPhone Spyware "Triangulation" Versi Baru — Bisa Infeksi Tanpa Klik Apapun</h3>
+                    <div class="flex items-center gap-2 text-[11px] text-g-muted">
+                        <span class="flex items-center gap-1"><i data-lucide="eye" class="w-3 h-3"></i>45K</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border">
+                <div class="relative overflow-hidden aspect-video">
+                    <img src="https://picsum.photos/seed/samsungleak/600/340.jpg" alt="" class="card-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-g-card via-transparent to-transparent"></div>
+                    <span class="absolute top-3 left-3 bg-g-gold/90 text-black text-[9px] font-bold px-2 py-0.5 rounded">🇰🇷 LEAK</span>
+                </div>
+                <div class="p-4">
+                    <span class="text-[10px] font-mono text-g-muted">21 Jun 2025</span>
+                    <h3 class="text-sm font-bold text-white leading-snug mt-1.5 mb-2">Samsung Galaxy Z Fold 7 — Schematics & Source Code Bocor Sebelum Launch</h3>
+                    <div class="flex items-center gap-2 text-[11px] text-g-muted">
+                        <span class="flex items-center gap-1"><i data-lucide="eye" class="w-3 h-3"></i>52K</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border">
+                <div class="relative overflow-hidden aspect-video">
+                    <img src="https://picsum.photos/seed/tesla25hack/600/340.jpg" alt="" class="card-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-g-card via-transparent to-transparent"></div>
+                    <span class="absolute top-3 left-3 bg-g-cyan/90 text-black text-[9px] font-bold px-2 py-0.5 rounded">🇺🇸 IoT</span>
+                </div>
+                <div class="p-4">
+                    <span class="text-[10px] font-mono text-g-muted">20 Jun 2025</span>
+                    <h3 class="text-sm font-bold text-white leading-snug mt-1.5 mb-2">Tesla Model Y Bisa Dikendalikan Remote — Bug di Bluetooth Gateway Dieksploitasi</h3>
+                    <div class="flex items-center gap-2 text-[11px] text-g-muted">
+                        <span class="flex items-center gap-1"><i data-lucide="eye" class="w-3 h-3"></i>71K</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border">
+                <div class="relative overflow-hidden aspect-video">
+                    <img src="https://picsum.photos/seed/iran25/600/340.jpg" alt="" class="card-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-g-card via-transparent to-transparent"></div>
+                    <span class="absolute top-3 left-3 bg-g-red/90 text-white text-[9px] font-bold px-2 py-0.5 rounded">🇮🇷 STATE</span>
+                </div>
+                <div class="p-4">
+                    <span class="text-[10px] font-mono text-g-muted">19 Jun 2025</span>
+                    <h3 class="text-sm font-bold text-white leading-snug mt-1.5 mb-2">Iran Hacker Group "Mango" Serang Water Treatment Plant di Israel</h3>
+                    <div class="flex items-center gap-2 text-[11px] text-g-muted">
+                        <span class="flex items-center gap-1"><i data-lucide="eye" class="w-3 h-3"></i>33K</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="news-card bg-g-card border border-g-border rounded-xl overflow-hidden glow-border">
+                <div class="relative overflow-hidden aspect-video">
+                    <img src="https://picsum.photos/seed/linux25kernel/600/340.jpg" alt="" class="card-img w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-g-card via-transparent to-transparent"></div>
+                    <span class="absolute top-3 left-3 bg-g-green/90 text-black text-[9px] font-bold px-2 py-0.5 rounded">🐧 LINUX</span>
+                </div>
+                <div class="p-4">
+                    <span class="text-[10px] font-mono text-g-muted">18 Jun 2025</span>
+                    <h3 class="text-sm font-bold text-white leading-snug mt-1.5 mb-2">Linux Kernel 6.12 Patch — Fix 3 Kerentanan Privilege Escalation Aktif</h3>
+                    <div class="flex items-center gap-2 text-[11px] text-g-muted">
+                        <span class="flex items-center gap-1"><i data-lucide="eye" class="w-3 h-3"></i>19K</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- ========== THREAT INTEL DASHBOARD ========== -->
+<section id="threatmap" class="relative z-10 py-20 border-t border-g-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex items-center gap-3 mb-10 fade-up">
+            <span class="text-3xl">🗺️</span>
+            <div>
+                <span class="text-xs font-mono text-g-gold tracking-wider uppercase">Threat Intelligence</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Live Threat Dashboard</h2>
+            </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-5 fade-up">
+            <!-- Threat stats -->
+            <div class="lg:col-span-2 bg-g-card border border-g-border rounded-xl p-6 glow-border">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                        <span class="w-2 h-2 bg-g-red rounded-full threat-pulse"></span>
+                        Serangan Siber Terdeteksi (24 Jam Terakhir)
+                    </h3>
+                    <span class="text-[10px] font-mono text-g-muted">UPDATE SETIAP 5 MENIT</span>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+                    <div class="bg-g-panel border border-g-border rounded-lg p-4 text-center">
+                        <div class="text-2xl font-black text-g-red stat-num" id="statDdos">14,892</div>
+                        <div class="text-[10px] text-g-muted mt-1 uppercase tracking-wider">DDoS</div>
+                    </div>
+                    <div class="bg-g-panel border border-g-border rounded-lg p-4 text-center">
+                        <div class="text-2xl font-black text-g-gold stat-num" id="statRansom">847</div>
+                        <div class="text-[10px] text-g-muted mt-1 uppercase tracking-wider">Ransomware</div>
+                    </div>
+                    <div class="bg-g-panel border border-g-border rounded-lg p-4 text-center">
+                        <div class="text-2xl font-black text-g-cyan stat-num" id="statPhish">23,451</div>
+                        <div class="text-[10px] text-g-muted mt-1 uppercase tracking-wider">Phishing</div>
+                    </div>
+                    <div class="bg-g-panel border border-g-border rounded-lg p-4 text-center">
+                        <div class="text-2xl font-black text-g-purple stat-num" id="statMalware">5,672</div>
+                        <div class="text-[10px] text-g-muted mt-1 uppercase tracking-wider">Malware</div>
+                    </div>
+                </div>
+
+                <!-- Fake threat map viz -->
+                <div class="relative bg-g-panel border border-g-border rounded-lg overflow-hidden" style="height:220px">
+                    <canvas id="threatCanvas" class="w-full h-full"></canvas>
+                    <div class="absolute inset-0 bg-gradient-to-t from-g-panel via-transparent to-g-panel/50"></div>
+                    <!-- Overlay labels -->
+                    <div class="absolute top-4 left-4 text-[10px] font-mono text-g-green/70">
+                        <div>◆ Jakarta, ID — 2,341 attacks</div>
+                        <div>◆ Singapore, SG — 1,872 attacks</div>
+                    </div>
+                    <div class="absolute top-4 right-4 text-[10px] font-mono text-g-gold/70">
+                        <div>◆ Moscow, RU — 4,521 attacks</div>
+                        <div>◆ Beijing, CN — 3,891 attacks</div>
+                    </div>
+                    <div class="absolute bottom-4 left-4 text-[10px] font-mono text-g-cyan/70">
+                        <div>◆ Washington, US — 1,234 attacks</div>
+                    </div>
+                    <div class="absolute bottom-4 right-4 text-[10px] font-mono text-g-red/70">
+                        <div>◆ London, UK — 987 attacks</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent vulnerabilities -->
+            <div class="bg-g-card border border-g-border rounded-xl p-6 glow-border">
+                <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
+                    <i data-lucide="shield-alert" class="w-4 h-4 text-g-gold"></i>
+                    CVE Terbaru
+                </h3>
+                <div class="space-y-3">
+                    <div class="bg-g-panel border border-g-border rounded-lg p-3 hover:border-g-red/50 transition-colors cursor-pointer">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs font-mono font-bold text-g-red">CVE-2025-3028</span>
+                            <span class="text-[9px] bg-g-red/20 text-g-red px-1.5 py-0.5 rounded font-bold">CRITICAL 9.8</span>
+                        </div>
+                        <p class="text-[11px] text-g-muted">Mikrotik RouterOS - RCE via HTTP</p>
+                    </div>
+                    <div class="bg-g-panel border border-g-border rounded-lg p-3 hover:border-g-gold/50 transition-colors cursor-pointer">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs font-mono font-bold text-g-gold">CVE-2025-2987</span>
+                            <span class="text-[9px] bg-g-gold/20 text-g-gold px-1.5 py-0.5 rounded font-bold">HIGH 8.6</span>
+                        </div>
+                        <p class="text-[11px] text-g-muted">Chrome V8 - Type Confusion</p>
+                    </div>
+                    <div class="bg-g-panel border border-g-border rounded-lg p-3 hover:border-g-gold/50 transition-colors cursor-pointer">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs font-mono font-bold text-g-gold">CVE-2025-2945</span>
+                            <span class="text-[9px] bg-g-gold/20 text-g-gold px-1.5 py-0.5 rounded font-bold">HIGH 8.1</span>
+                        </div>
+                        <p class="text-[11px] text-g-muted">Windows Kernel - Priv Esc</p>
+                    </div>
+                    <div class="bg-g-panel border border-g-border rounded-lg p-3 hover:border-g-cyan/50 transition-colors cursor-pointer">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs font-mono font-bold text-g-cyan">CVE-2025-2901</span>
+                            <span class="text-[9px] bg-g-cyan/20 text-g-cyan px-1.5 py-0.5 rounded font-bold">MEDIUM 6.5</span>
+                        </div>
+                        <p class="text-[11px] text-g-muted">Apache Struts - Path Traversal</p>
+                    </div>
+                    <div class="bg-g-panel border border-g-border rounded-lg p-3 hover:border-g-cyan/50 transition-colors cursor-pointer">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs font-mono font-bold text-g-cyan">CVE-2025-2876</span>
+                            <span class="text-[9px] bg-g-cyan/20 text-g-cyan px-1.5 py-0.5 rounded font-bold">MEDIUM 5.9</span>
+                        </div>
+                        <p class="text-[11px] text-g-muted">OpenSSL - DoS via Certificate</p>
+                    </div>
+                    <div class="bg-g-panel border border-g-border rounded-lg p-3 hover:border-g-green/50 transition-colors cursor-pointer">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-xs font-mono font-bold text-g-green">CVE-2025-2834</span>
+                            <span class="text-[9px] bg-g-green/20 text-g-green px-1.5 py-0.5 rounded font-bold">LOW 3.7</span>
+                        </div>
+                        <p class="text-[11px] text-g-muted">Linux - Info Disclosure</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== TUTORIAL ========== -->
+<section id="tutorial" class="relative z-10 py-20 border-t border-g-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex items-center gap-3 mb-10 fade-up">
+            <span class="text-3xl">📘</span>
+            <div>
+                <span class="text-xs font-mono text-g-green tracking-wider uppercase">Tutorial & Guides</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Belajar Hacking</h2>
+            </div>
+        </div>
+
+        <!-- Tab filter -->
+        <div class="flex flex-wrap gap-2 mb-8 fade-up">
+            <button onclick="filterTutorial('all',this)" class="tab-btn tab-active text-xs font-semibold px-4 py-2 rounded-lg border border-g-border text-g-muted hover:text-white transition-all">Semua</button>
+            <button onclick="filterTutorial('web',this)" class="tab-btn text-xs font-semibold px-4 py-2 rounded-lg border border-g-border text-g-muted hover:text-white transition-all">Web Hacking</button>
+            <button onclick="filterTutorial('network',this)" class="tab-btn text-xs font-semibold px-4 py-2 rounded-lg border border-g-border text-g-muted hover:text-white transition-all">Network</button>
+            <button onclick="filterTutorial('osint',this)" class="tab-btn text-xs font-semibold px-4 py-2 rounded-lg border border-g-border text-g-muted hover:text-white transition-all">OSINT</button>
+            <button onclick="filterTutorial('malware',this)" class="tab-btn text-xs font-semibold px-4 py-2 rounded-lg border border-g-border text-g-muted hover:text-white transition-all">Malware Analysis</button>
+        </div>
+
+        <div id="tutorialGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 fade-up">
+            <article class="tut-card news-card bg-g-card border border-g-border rounded-xl p-5 glow-border" data-cat="web">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="bg-g-red/20 text-g-red text-[10px] font-bold px-2 py-0.5 rounded">WEB</span>
+                    <span class="text-[10px] text-g-muted font-mono">INTERMEDIATE</span>
+                </div>
+                <h3 class="text-base font-bold text-white leading-snug mb-2">SQL Injection to RCE: Dari Error-Based sampai Shell Upload</h3>
+                <p class="text-xs text-g-muted leading-relaxed mb-4">Tutorial lengkap eskalasi SQL Injection dari error-based, union-based, blind, sampai upload webshell via OUTFILE...</p>
+                <div class="flex items-center justify-between text-[11px] text-g-muted">
+                    <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 12 min read</span>
+                    <span class="flex items-center gap-1"><i data-lucide="bookmark" class="w-3 h-3"></i> Save</span>
+                </div>
+            </article>
+
+            <article class="tut-card news-card bg-g-card border border-g-border rounded-xl p-5 glow-border" data-cat="osint">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="bg-g-cyan/20 text-g-cyan text-[10px] font-bold px-2 py-0.5 rounded">OSINT</span>
+                    <span class="text-[10px] text-g-muted font-mono">BEGINNER</span>
+                </div>
+                <h3 class="text-base font-bold text-white leading-snug mb-2">OSINT untuk Pemula: Melacak Identitas dari Username Saja</h3>
+                <p class="text-xs text-g-muted leading-relaxed mb-4">Pelajari teknik OSINT dasar untuk menemukan jejak digital seseorang hanya dari username menggunakan tools gratis...</p>
+                <div class="flex items-center justify-between text-[11px] text-g-muted">
+                    <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 8 min read</span>
+                    <span class="flex items-center gap-1"><i data-lucide="bookmark" class="w-3 h-3"></i> Save</span>
+                </div>
+            </article>
+
+            <article class="tut-card news-card bg-g-card border border-g-border rounded-xl p-5 glow-border" data-cat="network">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="bg-g-purple/20 text-g-purple text-[10px] font-bold px-2 py-0.5 rounded">NETWORK</span>
+                    <span class="text-[10px] text-g-muted font-mono">ADVANCED</span>
+                </div>
+                <h3 class="text-base font-bold text-white leading-snug mb-2">Man-in-the-Middle dengan Bettercap — Hijacking Session WiFi</h3>
+                <p class="text-xs text-g-muted leading-relaxed mb-4">Bagaimana melakukan MITM attack di jaringan WiFi publik menggunakan Bettercap, termasuk SSL stripping dan session hijacking...</p>
+                <div class="flex items-center justify-between text-[11px] text-g-muted">
+                    <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 15 min read</span>
+                    <span class="flex items-center gap-1"><i data-lucide="bookmark" class="w-3 h-3"></i> Save</span>
+                </div>
+            </article>
+
+            <article class="tut-card news-card bg-g-card border border-g-border rounded-xl p-5 glow-border" data-cat="malware">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="bg-g-gold/20 text-g-gold text-[10px] font-bold px-2 py-0.5 rounded">MALWARE</span>
+                    <span class="text-[10px] text-g-muted font-mono">INTERMEDIATE</span>
+                </div>
+                <h3 class="text-base font-bold text-white leading-snug mb-2">Reverse Engineering Ransomware: Dekompilasi & Analisis Locker</h3>
+                <p class="text-xs text-g-muted leading-relaxed mb-4">Step-by-step menganalisis sampel ransomware menggunakan Ghidra, IDA Pro, dan debugger untuk memahami encryption logic...</p>
+                <div class="flex items-center justify-between text-[11px] text-g-muted">
+                    <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 20 min read</span>
+                    <span class="flex items-center gap-1"><i data-lucide="bookmark" class="w-3 h-3"></i> Save</span>
+                </div>
+            </article>
+
+            <article class="tut-card news-card bg-g-card border border-g-border rounded-xl p-5 glow-border" data-cat="web">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="bg-g-red/20 text-g-red text-[10px] font-bold px-2 py-0.5 rounded">WEB</span>
+                    <span class="text-[10px] text-g-muted font-mono">BEGINNER</span>
+                </div>
+                <h3 class="text-base font-bold text-white leading-snug mb-2">XSS Complete Guide: Reflected, Stored, DOM-Based — Cara Deteksi & Eksploitasi</h3>
+                <p class="text-xs text-g-muted leading-relaxed mb-4">Panduan lengkap Cross-Site Scripting dari dasar sampai bypass WAF, termasuk teknik polyglot dan mutation XSS terbaru...</p>
+                <div class="flex items-center justify-between text-[11px] text-g-muted">
+                    <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 10 min read</span>
+                    <span class="flex items-center gap-1"><i data-lucide="bookmark" class="w-3 h-3"></i> Save</span>
+                </div>
+            </article>
+
+            <article class="tut-card news-card bg-g-card border border-g-border rounded-xl p-5 glow-border" data-cat="osint">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="bg-g-cyan/20 text-g-cyan text-[10px] font-bold px-2 py-0.5 rounded">OSINT</span>
+                    <span class="text-[10px] text-g-muted font-mono">INTERMEDIATE</span>
+                </div>
+                <h3 class="text-base font-bold text-white leading-snug mb-2">Shodan Mastery: Menemukan Device Vulnerable di Seluruh Indonesia</h3>
+                <p class="text-xs text-g-muted leading-relaxed mb-4">Query Shodan canggih untuk menemukan CCTV, router, SCADA, dan IoT device yang tidak aman di Indonesia...</p>
+                <div class="flex items-center justify-between text-[11px] text-g-muted">
+                    <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3 h-3"></i> 7 min read</span>
+                    <span class="flex items-center gap-1"><i data-lucide="bookmark" class="w-3 h-3"></i> Save</span>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- ========== TOOLS ========== -->
+<section id="tools" class="relative z-10 py-20 border-t border-g-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex items-center gap-3 mb-10 fade-up">
+            <span class="text-3xl">🔧</span>
+            <div>
+                <span class="text-xs font-mono text-g-purple tracking-wider uppercase">Arsenal</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Tools Favorit</h2>
+            </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 fade-up">
+            <div class="news-card bg-g-card border border-g-border rounded-xl p-5 glow-border text-center">
+                <div class="w-14 h-14 bg-g-red/10 border border-g-red/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="scan" class="w-7 h-7 text-g-red"></i>
+                </div>
+                <h4 class="font-bold text-white mb-1">Nmap</h4>
+                <p class="text-[11px] text-g-muted mb-3">Network Discovery & Security Auditing</p>
+                <span class="text-[10px] font-mono text-g-green bg-g-green/10 px-2 py-0.5 rounded">FREE • OPEN SOURCE</span>
+            </div>
+            <div class="news-card bg-g-card border border-g-border rounded-xl p-5 glow-border text-center">
+                <div class="w-14 h-14 bg-g-purple/10 border border-g-purple/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="bug" class="w-7 h-7 text-g-purple"></i>
+                </div>
+                <h4 class="font-bold text-white mb-1">Burp Suite</h4>
+                <p class="text-[11px] text-g-muted mb-3">Web Application Security Testing</p>
+                <span class="text-[10px] font-mono text-g-gold bg-g-gold/10 px-2 py-0.5 rounded">FREE / PRO $449</span>
+            </div>
+            <div class="news-card bg-g-card border border-g-border rounded-xl p-5 glow-border text-center">
+                <div class="w-14 h-14 bg-g-cyan/10 border border-g-cyan/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="search" class="w-7 h-7 text-g-cyan"></i>
+                </div>
+                <h4 class="font-bold text-white mb-1">Shodan</h4>
+                <p class="text-[11px] text-g-muted mb-3">Internet Device Search Engine</p>
+                <span class="text-[10px] font-mono text-g-cyan bg-g-cyan/10 px-2 py-0.5 rounded">FREEMIUM</span>
+            </div>
+            <div class="news-card bg-g-card border border-g-border rounded-xl p-5 glow-border text-center">
+                <div class="w-14 h-14 bg-g-green/10 border border-g-green/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="terminal" class="w-7 h-7 text-g-green"></i>
+                </div>
+                <h4 class="font-bold text-white mb-1">Metasploit</h4>
+                <p class="text-[11px] text-g-muted mb-3">Penetration Testing Framework</p>
+                <span class="text-[10px] font-mono text-g-green bg-g-green/10 px-2 py-0.5 rounded">FREE • OPEN SOURCE</span>
+            </div>
+            <div class="news-card bg-g-card border border-g-border rounded-xl p-5 glow-border text-center">
+                <div class="w-14 h-14 bg-g-gold/10 border border-g-gold/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="wifi" class="w-7 h-7 text-g-gold"></i>
+                </div>
+                <h4 class="font-bold text-white mb-1">Wireshark</h4>
+                <p class="text-[11px] text-g-muted mb-3">Network Protocol Analyzer</p>
+                <span class="text-[10px] font-mono text-g-green bg-g-green/10 px-2 py-0.5 rounded">FREE • OPEN SOURCE</span>
+            </div>
+            <div class="news-card bg-g-card border border-g-border rounded-xl p-5 glow-border text-center">
+                <div class="w-14 h-14 bg-g-red/10 border border-g-red/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="hash" class="w-7 h-7 text-g-red"></i>
+                </div>
+                <h4 class="font-bold text-white mb-1">Hashcat</h4>
+                <p class="text-[11px] text-g-muted mb-3">Advanced Password Recovery</p>
+                <span class="text-[10px] font-mono text-g-green bg-g-green/10 px-2 py-0.5 rounded">FREE • OPEN SOURCE</span>
+            </div>
+            <div class="news-card bg-g-card border border-g-border rounded-xl p-5 glow-border text-center">
+                <div class="w-14 h-14 bg-g-purple/10 border border-g-purple/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="microscope" class="w-7 h-7 text-g-purple"></i>
+                </div>
+                <h4 class="font-bold text-white mb-1">Ghidra</h4>
+                <p class="text-[11px] text-g-muted mb-3">Reverse Engineering by NSA</p>
+                <span class="text-[10px] font-mono text-g-green bg-g-green/10 px-2 py-0.5 rounded">FREE • OPEN SOURCE</span>
+            </div>
+            <div class="news-card bg-g-card border border-g-border rounded-xl p-5 glow-border text-center">
+                <div class="w-14 h-14 bg-g-cyan/10 border border-g-cyan/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="radar" class="w-7 h-7 text-g-cyan"></i>
+                </div>
+                <h4 class="font-bold text-white mb-1">theHarvester</h4>
+                <p class="text-[11px] text-g-muted mb-3">OSINT Email & Domain Harvester</p>
+                <span class="text-[10px] font-mono text-g-green bg-g-green/10 px-2 py-0.5 rounded">FREE • OPEN SOURCE</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== NEWSLETTER / CTA ========== -->
+<section class="relative z-10 py-20 border-t border-g-border">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="relative bg-g-card border border-g-border rounded-2xl p-8 sm:p-12 glow-border overflow-hidden fade-up">
+            <!-- BG decoration -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-g-red/5 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 left-0 w-48 h-48 bg-g-cyan/5 rounded-full blur-3xl"></div>
+
+            <div class="relative z-10 max-w-2xl mx-auto text-center">
+                <div class="inline-flex items-center gap-2 bg-g-red/10 border border-g-red/20 rounded-full px-4 py-1.5 mb-6">
+                    <i data-lucide="bell" class="w-4 h-4 text-g-red"></i>
+                    <span class="text-xs text-g-red font-semibold">Jangan Ketinggalan Update</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4 tracking-tight">Follow di Instagram untuk<br><span class="grad-text">Berita Hacking Tercepat</span></h2>
+                <p class="text-sm text-g-muted mb-8 max-w-lg mx-auto">Kami posting berita hacking, data breach, vulnerability, dan cyber attack setiap hari di Instagram. Update tercepat langsung di feed kamu.</p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <a href="https://www.instagram.com/garuda.security.official/" target="_blank" class="inline-flex items-center gap-3 bg-g-red hover:bg-g-darkred text-white px-8 py-4 rounded-xl font-bold transition-all hover:shadow-xl hover:shadow-red-500/25 text-base">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        @garuda.security.official
+                    </a>
+                </div>
+
+                <div class="flex items-center justify-center gap-6 mt-8 text-sm text-g-muted">
+                    <div class="flex items-center gap-2"><i data-lucide="zap" class="w-4 h-4 text-g-gold"></i> Update Harian</div>
+                    <div class="flex items-center gap-2"><i data-lucide="globe" class="w-4 h-4 text-g-cyan"></i> Indo + Global</div>
+                    <div class="flex items-center gap-2"><i data-lucide="shield" class="w-4 h-4 text-g-green"></i> Edukatif</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="relative z-10 border-t border-g-border bg-g-dark">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+            <!-- Brand -->
+            <div class="sm:col-span-2 lg:col-span-1">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 bg-g-red rounded-lg flex items-center justify-center">
+                        <svg viewBox="0 0 24 24" class="w-6 h-6 text-white" fill="currentColor"><path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5zm0 2.18l7 3.89v5.93c0 4.56-3.14 8.83-7 9.93-3.86-1.1-7-5.37-7-9.93V8.07l7-3.89z"/><path d="M10 15.5l-3.5-3.5 1.41-1.41L10 12.67l5.59-5.59L17 8.5l-7 7z"/></svg>
+                    </div>
+                    <div>
+                        <div class="text-white font-bold text-sm">GARUDA SECURITY</div>
+                        <div class="text-g-red text-[10px] font-mono font-semibold tracking-[.2em]">OFFICIAL</div>
+                    </div>
+                </div>
+                <p class="text-xs text-g-muted leading-relaxed mb-4">Portal berita hacking & cybersecurity independen. Menyajikan informasi terbaru dari dunia cyber untuk edukasi dan awareness.</p>
+                <div class="flex items-center gap-2">
+                    <a href="https://www.instagram.com/garuda.security.official/" target="_blank" class="w-9 h-9 bg-g-card border border-g-border rounded-lg flex items-center justify-center text-g-muted hover:text-g-red hover:border-g-red/50 transition-all">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    </a>
+                    <a href="#" class="w-9 h-9 bg-g-card border border-g-border rounded-lg flex items-center justify-center text-g-muted hover:text-white hover:border-white/30 transition-all">
+                        <i data-lucide="github" class="w-4 h-4"></i>
+                    </a>
+                    <a href="#" class="w-9 h-9 bg-g-card border border-g-border rounded-lg flex items-center justify-center text-g-muted hover:text-g-cyan hover:border-g-cyan/50 transition-all">
+                        <i data-lucide="send" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Kategori -->
+            <div>
+                <h4 class="text-white font-bold text-sm mb-4">Kategori</h4>
+                <ul class="space-y-2.5">
+                    <li><a href="#indo" class="text-xs text-g-muted hover:text-g-red transition-colors">Hacking Indonesia</a></li>
+                    <li><a href="#global" class="text-xs text-g-muted hover:text-g-red transition-colors">Hacking Global</a></li>
+                    <li><a href="#" class="text-xs text-g-muted hover:text-g-red transition-colors">Data Breach</a></li>
+                    <li><a href="#" class="text-xs text-g-muted hover:text-g-red transition-colors">Ransomware</a></li>
+                    <li><a href="#" class="text-xs text-g-muted hover:text-g-red transition-colors">Vulnerability</a></li>
+                    <li><a href="#" class="text-xs text-g-muted hover:text-g-red transition-colors">Bug Bounty</a></li>
+                    <li><a href="#" class="text-xs text-g-muted hover:text-g-red transition-colors">Malware Analysis</a></li>
+                </ul>
+            </div>
+
+            <!-- Resources -->
+            <div>
+                <h4 class="text-white font-bold text-sm mb-4">Resources</h4>
+                <ul class="space-y-2.5">
+                    <li><a href="#tutorial" class="text-xs text-g-muted hover:text-g-red transition-colors">Tutorial</a></li>
+                    <li><a href="#tools" class="text-xs text-g-muted hover:text-g-red transition-colors">Hacking Tools</a></li>
+                    <li><a href="#threatmap" class="text-xs text-g-muted hover:text-g-red transition-colors">Threat Map</a></li>
+                    <li><a href="#" class="text-xs text-g-muted hover:text-g-red transition-colors">CVE Database</a></li>
+                    <li><a href="#" class="text-xs text-g-muted hover:text-g-red transition-colors">Dark Web Monitor</a></li>
+                    <li><a href="#" class="text-xs text-g-muted hover:text-g-red transition-colors">Cyber Glossary</a></li>
+                </ul>
+            </div>
+
+            <!-- Disclaimer -->
+            <div>
+                <h4 class="text-white font-bold text-sm mb-4">Disclaimer</h4>
+                <p class="text-[11px] text-g-muted leading-relaxed">Semua konten di website ini dipublikasikan untuk tujuan <span class="text-white">edukasi dan awareness</span> saja. Kami tidak bertanggung jawab atas penyalahgunaan informasi. Selalu patuhi hukum yang berlaku.</p>
+                <div class="mt-4 p-3 bg-g-red/5 border border-g-red/10 rounded-lg">
+                    <p class="text-[10px] text-g-red/80 font-mono leading-relaxed">⚠️ White Hat Only.<br>Jangan pernah hack tanpa izin.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom bar -->
+        <div class="mt-12 pt-8 border-t border-g-border flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-[11px] text-g-muted">© 2025 Garuda Security Official. All rights reserved.</p>
+            <div class="flex items-center gap-1 text-[11px] text-g-muted">
+                <span>Made with</span>
+                <span class="text-g-red">🔴</span>
+                <span>for Indonesian Cyber Community</span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Toast Container -->
+<div id="toastContainer" class="fixed bottom-6 right-6 z-[100] space-y-2"></div>
+
+<!-- Back to top -->
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 left-6 z-50 w-10 h-10 bg-g-card border border-g-border rounded-lg flex items-center justify-center text-g-muted hover:text-white hover:border-g-red/50 transition-all opacity-0 pointer-events-none">
+    <i data-lucide="chevron-up" class="w-5 h-5"></i>
+</button>
+
+<script>
+// ====== MATRIX RAIN ======
+const mc = document.getElementById('matrixCanvas');
+const mctx = mc.getContext('2d');
+function resizeMatrix(){ mc.width = window.innerWidth; mc.height = window.innerHeight; }
+resizeMatrix();
+window.addEventListener('resize', resizeMatrix);
+const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*(){}[]|;:<>,.?/~`';
+const fontSize = 14;
+let columns = Math.floor(mc.width / fontSize);
+let drops = Array(columns).fill(1);
+function drawMatrix(){
+    mctx.fillStyle = 'rgba(5,5,5,0.05)';
+    mctx.fillRect(0, 0, mc.width, mc.height);
+    mctx.fillStyle = '#DC2626';
+    mctx.font = fontSize + 'px JetBrains Mono';
+    for(let i = 0; i < drops.length; i++){
+        const text = chars.charAt(Math.floor(Math.random() * chars.length));
+        mctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if(drops[i] * fontSize > mc.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+    }
+}
+setInterval(drawMatrix, 50);
+window.addEventListener('resize', () => { columns = Math.floor(mc.width / fontSize); drops = Array(columns).fill(1); });
+
+// ====== THREAT CANVAS ======
+const tc = document.getElementById('threatCanvas');
+const tctx = tc.getContext('2d');
+function resizeThreat(){ tc.width = tc.parentElement.offsetWidth; tc.height = tc.parentElement.offsetHeight; }
+resizeThreat();
+window.addEventListener('resize', resizeThreat);
+
+let threats = [];
+function addThreat(){
+    const cities = [
+        {x:0.72,y:0.35,name:'Jakarta'},{x:0.68,y:0.45,name:'Singapore'},
+        {x:0.55,y:0.25,name:'Moscow'},{x:0.75,y:0.3,name:'Beijing'},
+        {x:0.15,y:0.3,name:'Washington'},{x:0.42,y:0.25,name:'London'},
+        {x:0.82,y:0.55,name:'Tokyo'},{x:0.35,y:0.6,name:'São Paulo'},
+        {x:0.6,y:0.65,name:'Sydney'},{x:0.48,y:0.4,name:'Berlin'},
+    ];
+    const from = cities[Math.floor(Math.random()*cities.length)];
+    let to = cities[Math.floor(Math.random()*cities.length)];
+    while(to.name === from.name) to = cities[Math.floor(Math.random()*cities.length)];
+    threats.push({
+        fx: from.x*tc.width, fy: from.y*tc.height,
+        tx: to.x*tc.width, ty: to.y*tc.height,
+        progress: 0, speed: 0.005 + Math.random()*0.015,
+        color: ['#DC2626','#EAB308','#06B6D4','#A855F7','#22C55E'][Math.floor(Math.random()*5)]
+    });
+}
+for(let i=0;i<8;i++) addThreat();
+
+function drawThreats(){
+    tctx.clearRect(0,0,tc.width,tc.height);
+    // Grid
+    tctx.strokeStyle = 'rgba(220,38,38,0.03)';
+    tctx.lineWidth = 0.5;
+    for(let x=0;x<tc.width;x+=40){ tctx.beginPath(); tctx.moveTo(x,0); tctx.lineTo(x,tc.height); tctx.stroke(); }
+    for(let y=0;y<tc.height;y+=40){ tctx.beginPath(); tctx.moveTo(0,y); tctx.lineTo(tc.width,y); tctx.stroke(); }
+
+    threats.forEach((t,i) => {
+        t.progress += t.speed;
+        const cx = t.fx + (t.tx - t.fx) * t.progress;
+        const cy = t.fy + (t.ty - t.fy) * t.progress;
+
+        // Trail line
+        tctx.beginPath();
+        tctx.moveTo(t.fx, t.fy);
+        tctx.lineTo(cx, cy);
+        tctx.strokeStyle = t.color + '40';
+        tctx.lineWidth = 1;
+        tctx.stroke();
+
+        // Head dot
+        tctx.beginPath();
+        tctx.arc(cx, cy, 2, 0, Math.PI*2);
+        tctx.fillStyle = t.color;
+        tctx.fill();
+
+        if(t.progress >= 1) threats.splice(i,1);
+    });
+
+    if(threats.length < 8 && Math.random() > 0.95) addThreat();
+    requestAnimationFrame(drawThreats);
+}
+drawThreats();
+
+// ====== ANIMATED STATS ======
+function animateStats(){
+    const el1 = document.getElementById('statDdos');
+    const el2 = document.getElementById('statRansom');
+    const el3 = document.getElementById('statPhish');
+    const el4 = document.getElementById('statMalware');
+    setInterval(() => {
+        el1.textContent = (14892 + Math.floor(Math.random()*50)).toLocaleString();
+        el2.textContent = (847 + Math.floor(Math.random()*5)).toLocaleString();
+        el3.textContent = (23451 + Math.floor(Math.random()*80)).toLocaleString();
+        el4.textContent = (5672 + Math.floor(Math.random()*30)).toLocaleString();
+    }, 5000);
+}
+animateStats();
+
+// ====== SEARCH ======
+function toggleSearch(){
+    const bar = document.getElementById('searchBar');
+    bar.classList.toggle('hidden');
+    if(!bar.classList.contains('hidden')) document.getElementById('searchInput').focus();
+}
+document.addEventListener('keydown', e => {
+    if(e.key === 'Escape') document.getElementById('searchBar').classList.add('hidden');
+    if((e.metaKey || e.ctrlKey) && e.key === 'k'){ e.preventDefault(); toggleSearch(); }
+});
+
+// ====== MOBILE MENU ======
+function toggleMobile(){
+    document.getElementById('mobileMenu').classList.toggle('open');
+}
+document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => {
+    document.getElementById('mobileMenu').classList.remove('open');
+}));
+
+// ====== TUTORIAL FILTER ======
+function filterTutorial(cat, btn){
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-active'));
+    btn.classList.add('tab-active');
+    document.querySelectorAll('.tut-card').forEach(c => {
+        if(cat === 'all' || c.dataset.cat === cat){
+            c.style.display = '';
+        } else {
+            c.style.display = 'none';
+        }
+    });
+}
+
+// ====== SCROLL ANIMATIONS ======
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// ====== BACK TO TOP ======
+window.addEventListener('scroll', () => {
+    const btn = document.getElementById('backToTop');
+    if(window.scrollY > 600){ btn.style.opacity = '1'; btn.style.pointerEvents = 'auto'; }
+    else { btn.style.opacity = '0'; btn.style.pointerEvents = 'none'; }
+});
+
+// ====== TOAST ======
+function showToast(msg){
+    const c = document.getElementById('toastContainer');
+    const t = document.createElement('div');
+    t.className = 'toast-msg bg-g-card border border-g-border rounded-lg px-4 py-3 text-sm text-white shadow-xl';
+    t.textContent = msg;
+    c.appendChild(t);
+    setTimeout(() => t.remove(), 3000);
+}
+
+// ====== BOOKMARK CLICKS ======
+document.querySelectorAll('[data-lucide="bookmark"]').forEach(icon => {
+    icon.closest('span')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showToast('📄 Artikel disimpan!');
+    });
+});
+
+// ====== SHARE CLICKS ======
+document.querySelectorAll('[data-lucide="share-2"]').forEach(icon => {
+    icon.closest('span')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if(navigator.share){
+            navigator.share({ title: 'Garuda Security Official', url: window.location.href });
+        } else {
+            navigator.clipboard.writeText(window.location.href);
+            showToast('🔗 Link disalin ke clipboard!');
+        }
+    });
+});
+
+// ====== INIT LUCIDE ======
+lucide.createIcons();
+</script>
 
 </body>
 </html>
